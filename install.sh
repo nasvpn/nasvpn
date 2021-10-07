@@ -80,7 +80,7 @@ echo -e "y" | ufw enable
 apt install -y net-tools vnstat unzip curl screen
 
 # Install screenfetch
-wget -qO /usr/bin/screenfetch "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/screenfetch.sh"
+wget -qO /usr/bin/screenfetch "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/screenfetch.sh"
 chmod +x /usr/bin/screenfetch
 echo -e "clear
 screenfetch
@@ -88,7 +88,7 @@ echo" >> .profile
 
 # Configure SSH
 echo -e "AllowUsers root" >> /etc/ssh/sshd_config
-wget -qO /etc/issue.net "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/issue.net"
+wget -qO /etc/issue.net "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/issue.net"
 sed -i "s/#Banner none/Banner \/etc\/issue.net/g" /etc/ssh/sshd_config
 service ssh restart
 
@@ -97,7 +97,7 @@ apt install -y dropbear
 sed -i "s/NO_START=1/NO_START=0/g" /etc/default/dropbear
 sed -i "s/DROPBEAR_PORT=22/DROPBEAR_PORT=85/g" /etc/default/dropbear
 echo -e "/bin/false" >> /etc/shells
-wget -qO /etc/dropbear_issue.net "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/dropbear_issue.net"
+wget -qO /etc/dropbear_issue.net "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/dropbear_issue.net"
 sed -i 's|DROPBEAR_BANNER=""|DROPBEAR_BANNER="/etc/dropbear_issue.net"|g' /etc/default/dropbear
 service dropbear restart
 
@@ -105,19 +105,19 @@ service dropbear restart
 apt install -y stunnel4
 sed -i "s/ENABLED=0/ENABLED=1/g" /etc/default/stunnel4
 openssl req -new -newkey rsa:2048 -days 3650 -nodes -x509 -sha256 -subj "/CN=Iriszz/emailAddress=aiman.iriszz@gmail.com/O=Void VPN/OU=Void VPN Premium/C=MY" -keyout /etc/stunnel/stunnel.pem -out /etc/stunnel/stunnel.pem
-wget -qO /etc/stunnel/stunnel.conf "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/stunnel.conf"
+wget -qO /etc/stunnel/stunnel.conf "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/stunnel.conf"
 service stunnel4 restart
 
 # Install Squid3
 apt install -y squid3
-wget -qO /etc/squid/squid.conf "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/squid.conf"
+wget -qO /etc/squid/squid.conf "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/squid.conf"
 sed -i "s/xx/$domain/g" /etc/squid/squid.conf
 sed -i "s/ip/$ip/g" /etc/squid/squid.conf
 service squid restart
 
 # Install OpenVPN
 apt install -y openvpn
-wget -q "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/openvpn/EasyRSA-3.0.8.tgz"
+wget -q "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/openvpn/EasyRSA-3.0.8.tgz"
 tar xvf EasyRSA-3.0.8.tgz
 rm EasyRSA-3.0.8.tgz
 mv EasyRSA-3.0.8 /etc/openvpn/easy-rsa
@@ -142,8 +142,8 @@ cp /etc/openvpn/easy-rsa/pki/issued/server.crt /etc/openvpn/key/
 cp /etc/openvpn/easy-rsa/pki/ca.crt /etc/openvpn/key/
 cp /etc/openvpn/easy-rsa/pki/dh.pem /etc/openvpn/key/
 cp /etc/openvpn/easy-rsa/pki/private/server.key /etc/openvpn/key/
-wget -qO /etc/openvpn/server-udp.conf "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/openvpn/server-udp.conf"
-wget -qO /etc/openvpn/server-tcp.conf "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/openvpn/server-tcp.conf"
+wget -qO /etc/openvpn/server-udp.conf "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/openvpn/server-udp.conf"
+wget -qO /etc/openvpn/server-tcp.conf "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/openvpn/server-tcp.conf"
 sed -i "s/#AUTOSTART="all"/AUTOSTART="all"/g" /etc/default/openvpn
 echo -e "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
 sysctl -p
@@ -164,8 +164,8 @@ systemctl enable openvpn@server-tcp
 
 # Configure OpenVPN client configuration
 mkdir -p /iriszz/openvpn
-wget -qO /iriszz/openvpn/client-udp.ovpn "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/openvpn/client-udp.ovpn"
-wget -qO /iriszz/openvpn/client-tcp.ovpn "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/openvpn/client-tcp.ovpn"
+wget -qO /iriszz/openvpn/client-udp.ovpn "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/openvpn/client-udp.ovpn"
+wget -qO /iriszz/openvpn/client-tcp.ovpn "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/openvpn/client-tcp.ovpn"
 sed -i "s/xx/$ip/g" /iriszz/openvpn/client-udp.ovpn
 sed -i "s/xx/$ip/g" /iriszz/openvpn/client-tcp.ovpn
 echo -e "\n<ca>" >> /iriszz/openvpn/client-tcp.ovpn
@@ -181,11 +181,11 @@ if [ "$variant" == 1 ]; then
 	apt-get install -y lsb-release gnupg2 wget lsof tar unzip curl libpcre3 libpcre3-dev zlib1g-dev openssl libssl-dev jq nginx uuid-runtime
 	curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh | bash -s -- install
 	echo $domain > /usr/local/etc/xray/domain
-	wget -qO /usr/local/etc/xray/config.json "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/xray/xray.json"
-	wget -qO /etc/nginx/conf.d/${domain}.conf "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/xray/web.conf"
+	wget -qO /usr/local/etc/xray/config.json "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/xray/xray.json"
+	wget -qO /etc/nginx/conf.d/${domain}.conf "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/xray/web.conf"
 	sed -i "s/xxx/${domain}/g" /etc/nginx/conf.d/${domain}.conf
 	sed -i "s/x.x.x.x/${ip}/g" /etc/nginx/conf.d/${domain}.conf
-	wget -qO web.tar.gz "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/web.tar.gz"
+	wget -qO web.tar.gz "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/web.tar.gz"
 	rm -rf /var/www/html/*
 	tar xzf web.tar.gz -C /var/www/html
 	rm -f web.tar.gz
@@ -213,8 +213,8 @@ elif [[ "$variant" == 2 ]]; then
 	apt-get install -y jq uuid-runtime socat
 	bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
 	echo $domain > /usr/local/etc/v2ray/domain
-	wget -qO /usr/local/etc/v2ray/ws-tls.json "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/v2ray/v2ray-ws-tls.json"
-	wget -qO /usr/local/etc/v2ray/ws.json "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/v2ray/v2ray-ws.json"
+	wget -qO /usr/local/etc/v2ray/ws-tls.json "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/v2ray/v2ray-ws-tls.json"
+	wget -qO /usr/local/etc/v2ray/ws.json "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/v2ray/v2ray-ws.json"
 	sed -i "s/xx/${domain}/g" /usr/local/etc/v2ray/ws-tls.json
 	sed -i "s/xx/${domain}/g" /usr/local/etc/v2ray/ws.json
 	mkdir /iriszz/v2ray
@@ -253,7 +253,7 @@ mkdir /iriszz/wireguard
 touch /iriszz/wireguard/wireguard-clients.txt
 
 # Install OHP
-wget -qO /usr/bin/ohpserver "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/ohpserver"
+wget -qO /usr/bin/ohpserver "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/ohpserver"
 chmod +x /usr/bin/ohpserver
 screen -AmdS ohp-dropbear ohpserver -port 3128 -proxy 127.0.0.1:8080 -tunnel 127.0.0.1:85
 screen -AmdS ohp-openvpn ohpserver -port 8000 -proxy 127.0.0.1:8080 -tunnel 127.0.0.1:1194
@@ -261,7 +261,7 @@ screen -AmdS ohp-openvpn ohpserver -port 8000 -proxy 127.0.0.1:8080 -tunnel 127.
 # Install BadVPN UDPGw
 cd
 apt install -y cmake
-wget -qO badvpn.zip "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/badvpn.zip"
+wget -qO badvpn.zip "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/badvpn.zip"
 unzip badvpn.zip
 cd badvpn-master
 mkdir build-badvpn
@@ -283,7 +283,7 @@ service fail2ban restart
 
 # Install DDoS Deflate
 apt install -y dnsutils tcpdump dsniff grepcidr
-wget -qO ddos.zip "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/ddos-deflate.zip"
+wget -qO ddos.zip "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/ddos-deflate.zip"
 unzip ddos.zip
 cd ddos-deflate
 chmod +x install.sh
@@ -292,30 +292,30 @@ cd
 rm -rf ddos.zip ddos-deflate
 
 # Configure script
-wget -qO /usr/bin/menu "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/menu/menu.sh"
-wget -qO /usr/bin/ssh-vpn-script "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/menu/ssh-vpn-script.sh"
+wget -qO /usr/bin/menu "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/menu/menu.sh"
+wget -qO /usr/bin/ssh-vpn-script "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/menu/ssh-vpn-script.sh"
 if [[ "$variant" == 1 ]]; then
-	wget -qO /usr/bin/menu "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/menu/menu-xray.sh"
-	wget -qO /usr/bin/xray-script "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/menu/xray-script.sh"
+	wget -qO /usr/bin/menu "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/menu/menu-xray.sh"
+	wget -qO /usr/bin/xray-script "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/menu/xray-script.sh"
 	chmod +x /usr/bin/xray-script
 elif [[ "$variant" == 2 ]]; then
-	wget -qO /usr/bin/menu "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/menu/menu-v2ray.sh"
-	wget -qO /usr/bin/v2ray-script "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/menu/v2ray-script.sh"
+	wget -qO /usr/bin/menu "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/menu/menu-v2ray.sh"
+	wget -qO /usr/bin/v2ray-script "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/menu/v2ray-script.sh"
 	chmod +x /usr/bin/v2ray-script
 fi
-wget -qO /usr/bin/wireguard-script "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/menu/wireguard-script.sh"
-wget -qO /usr/bin/script-info "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/menu/script-info.sh"
-wget -qO /usr/bin/script-1 "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/cron/script-1.sh"
+wget -qO /usr/bin/wireguard-script "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/menu/wireguard-script.sh"
+wget -qO /usr/bin/script-info "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/menu/script-info.sh"
+wget -qO /usr/bin/script-1 "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/cron/script-1.sh"
 if [[ "$variant" == 1 ]]; then
-	wget -qO /usr/bin/script-2 "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/cron/script-2-xray.sh"
+	wget -qO /usr/bin/script-2 "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/cron/script-2-xray.sh"
 elif [[ "$variant" == 2 ]]; then
-	wget -qO /usr/bin/script-2 "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/cron/script-2-v2ray.sh"
+	wget -qO /usr/bin/script-2 "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/cron/script-2-v2ray.sh"
 fi
-wget -qO /usr/bin/script-3 "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/cron/script-3.sh"
+wget -qO /usr/bin/script-3 "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/cron/script-3.sh"
 chmod +x /usr/bin/{menu,ssh-vpn-script,wireguard-script,script-info,script-1,script-2,script-3}
 
 # Configure rc.local
-wget -qO /etc/rc.local "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/rc.local"
+wget -qO /etc/rc.local "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/rc.local"
 chmod +x /etc/rc.local
 
 # Configure crontab
@@ -323,7 +323,7 @@ echo "0 0 * * * root reboot" >> /etc/crontab
 echo "55 23 * * * root script-2" >> /etc/crontab
 
 # Configure lock Dropbear multi-login
-wget -qO /etc/systemd/system/script-3.service "https://raw.githubusercontent.com/iriszz-official/autoscript/main/FILES/cron/script-3.service"
+wget -qO /etc/systemd/system/script-3.service "https://raw.githubusercontent.com/nasri28/nasvpn/main/FILES/cron/script-3.service"
 mkdir /iriszz/script-3
 touch /iriszz/script-3/{multi-login.log,user-lock.log}
 echo 2 > /iriszz/script-3/limit
